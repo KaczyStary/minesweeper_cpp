@@ -1,7 +1,7 @@
 #ifndef MINESWEEPER_FF_GAME_H
 #define MINESWEEPER_FF_GAME_H
 
-#include "MinesweeperBoard.h"
+#include "minesweeperBoard.h"
 
 class Game {
 private:
@@ -29,7 +29,7 @@ public:
     void gameLoop();
 
 
-    int setTextures(MinesweeperBoard *minesweeperBoard, int height, int width);
+    int setTextures(minesweeperBoard *minesweeperBoard, int height, int width);
 
     // WINDOW //
     void windowClose();

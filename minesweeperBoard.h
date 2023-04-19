@@ -17,7 +17,7 @@ struct Field{
 
 };
 
-class MinesweeperBoard {
+class minesweeperBoard {
 private:
 
 public:
@@ -27,7 +27,7 @@ public:
     int boardHeight;
     int boardWidth;
 
-    MinesweeperBoard();
+    minesweeperBoard();
 
     void genBoard();
     void clearBoard();

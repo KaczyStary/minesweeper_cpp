@@ -1,17 +1,17 @@
-#include "MinesweeperBoard.h"
+#include "minesweeperBoard.h"
 
-void MinesweeperBoard::initVariables() {
+void minesweeperBoard::initVariables() {
     this->boardWidth=10;
     this->boardHeight=10;
 
 }
 
-MinesweeperBoard::MinesweeperBoard() {
+minesweeperBoard::minesweeperBoard() {
     initVariables();
     genBoard();
 }
 
-void MinesweeperBoard::debugDisplay() const {
+void minesweeperBoard::debugDisplay() const {
 
     for (const auto &i: boardVector) {
         for (auto j: i) {
@@ -36,7 +36,7 @@ void MinesweeperBoard::debugDisplay() const {
 
 }
 
-void MinesweeperBoard::genBoard() {
+void minesweeperBoard::genBoard() {
     for (int i = 0; i < this->boardHeight; i++) {
         std::vector<Field> row;
         for (int j = 0; j < this->boardWidth; j++) {
@@ -48,13 +48,13 @@ void MinesweeperBoard::genBoard() {
     }
 }
 
-void MinesweeperBoard::fieldStructConstructor(struct Field *field, bool hasMine, bool hasFlag, bool isRevealed) {
+void minesweeperBoard::fieldStructConstructor(struct Field *field, bool hasMine, bool hasFlag, bool isRevealed) {
     field->hasMine=hasMine;
     field->hasFlag=hasFlag;
     field->isRevealed=isRevealed;
 }
 
-void MinesweeperBoard::setMines() {
+void minesweeperBoard::setMines() {
 
     srand(time(nullptr));
 
@@ -79,7 +79,7 @@ void MinesweeperBoard::setMines() {
 
 }
 
-int MinesweeperBoard::minesAroundFieldFun(int forHeight, int forWidth, int height, int width){
+int minesweeperBoard::minesAroundFieldFun(int forHeight, int forWidth, int height, int width){
     int minesAroundField = 0;
 
     if (boardVector[forHeight][forWidth].hasMine) {
@@ -95,7 +95,7 @@ int MinesweeperBoard::minesAroundFieldFun(int forHeight, int forWidth, int heigh
     return minesAroundField;
 }
 
-int MinesweeperBoard::minesAroundField(int height, int width) {
+int minesweeperBoard::minesAroundField(int height, int width) {
     int minesAroundField = 0;
 
     //UPPER LIMIT
@@ -263,7 +263,7 @@ int MinesweeperBoard::minesAroundField(int height, int width) {
     return minesAroundField;
 }
 
-void MinesweeperBoard::toggleFlag(int height, int width) {
+void minesweeperBoard::toggleFlag(int height, int width) {
 
     if (!boardVector[height][width].isRevealed){
 
@@ -277,7 +277,7 @@ void MinesweeperBoard::toggleFlag(int height, int width) {
     }
 }
 
-void MinesweeperBoard::revealFiled(int height, int width) {
+void minesweeperBoard::revealFiled(int height, int width) {
 
     if (!boardVector[height][width].isRevealed){
 

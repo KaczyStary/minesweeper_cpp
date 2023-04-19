@@ -31,8 +31,9 @@ void Game::initTextures() {
 
 void Game::gameLoop() {
 
-    MinesweeperBoard minesweeperBoard;
+    minesweeperBoard minesweeperBoard;
     windowSwitchWindowToGame();
+    minesweeperBoard.setMines();
 
     while (this->window->isOpen()){
         sf::Vector2i mousePos = sf::Mouse::getPosition(*this->window);
@@ -81,12 +82,12 @@ void Game::gameLoop() {
         int x=0;
         int y=0;
 
-        for (int i = 0; i < MinesweeperBoard().boardHeight; i++) {
-            for (int j = 0; j < MinesweeperBoard().boardWidth; j++) {
+        for (int i = 0; i < minesweeperBoard.boardHeight; i++) {
+            for (int j = 0; j < minesweeperBoard.boardWidth; j++) {
 
-                this->sprite.setTexture(textures[setTextures(i,j)]);
+                this->sprite.setTexture(textures[setTextures(&minesweeperBoard,i,j)]);
                 this->sprite.setScale(scale,scale);
-                sprite.setPosition(x*scale,y*scale);
+                sprite.setPosition(y*scale,x*scale);
 
                 this->window->draw(sprite);
                 y+=12;
@@ -110,7 +111,7 @@ void Game::windowClose() {
 }
 
 void Game::initGame() {
-    MinesweeperBoard minesweeperBoard;
+    minesweeperBoard minesweeperBoard;
     minesweeperBoard.debugDisplay();
 
     windowSwitchWindowToGame();
@@ -120,8 +121,8 @@ void Game::initGame() {
 void Game::windowSwitchWindowToGame() {
     delete this->window;
 
-    this->windowBounds.width=MinesweeperBoard().boardWidth*48;
-    this->windowBounds.height=MinesweeperBoard().boardHeight*48;
+    this->windowBounds.width= minesweeperBoard().boardWidth * 48;
+    this->windowBounds.height= minesweeperBoard().boardHeight * 48;
 
     this->window=new sf::RenderWindow((this->windowBounds), this->windowName);
 }
@@ -131,10 +132,10 @@ void Game::inGameRender() {
     int x=0;
     int y=0;
 
-    for (int i = 0; i < MinesweeperBoard().boardHeight; i++) {
-        for (int j = 0; j < MinesweeperBoard().boardWidth; j++) {
+    for (int i = 0; i < minesweeperBoard().boardHeight; i++) {
+        for (int j = 0; j < minesweeperBoard().boardWidth; j++) {
 
-            this->sprite.setTexture(textures[setTextures(i,j)]);
+            //this->sprite.setTexture(textures[setTextures(i,j)]);
             this->sprite.setScale(scale,scale);
             sprite.setPosition(x*scale,y*scale);
 
@@ -154,40 +155,40 @@ void Game::render(){
     this->window->display();
 }
 
-int Game::setTextures(MinesweeperBoard *minesweeperBoard, int height, int width) {
+int Game::setTextures(minesweeperBoard *minesweeperBoard, int height, int width) {
     int numText=0;
 
     // NIE ODKRYTE, BEZ MINY, BEZ FLAGI - MOZLIWE
-    if (!minesweeperBoard->boardVector[height][width].isRevealed && !MinesweeperBoard().boardVector[height][width].hasMine && !MinesweeperBoard().boardVector[height][width].hasFlag){
+    if (!minesweeperBoard->boardVector[height][width].isRevealed && !minesweeperBoard->boardVector[height][width].hasMine && !minesweeperBoard->boardVector[height][width].hasFlag){
         numText=12;
     }
         // NIE ODKRYTE, BEZ MINY, FLAGA - MOZLIWE
-    else if (!MinesweeperBoard().boardVector[height][width].isRevealed && !MinesweeperBoard().boardVector[height][width].hasMine && MinesweeperBoard().boardVector[height][width].hasFlag){
+    else if (!minesweeperBoard->boardVector[height][width].isRevealed && !minesweeperBoard->boardVector[height][width].hasMine && minesweeperBoard->boardVector[height][width].hasFlag){
         numText=10;
     }
         // NIE ODKRYTE, MINA, BEZ FLAGI - MOZLIWE
-    else if (!MinesweeperBoard().boardVector[height][width].isRevealed && MinesweeperBoard().boardVector[height][width].hasMine && !MinesweeperBoard().boardVector[height][width].hasFlag){
+    else if (!minesweeperBoard->boardVector[height][width].isRevealed && minesweeperBoard->boardVector[height][width].hasMine && !minesweeperBoard->boardVector[height][width].hasFlag){
         numText=13;
     }
         // NIE ODKRYTE, MINA, FLAGA - MOZLIWE
-    else if (!MinesweeperBoard().boardVector[height][width].isRevealed && MinesweeperBoard().boardVector[height][width].hasMine && MinesweeperBoard().boardVector[height][width].hasFlag){
+    else if (!minesweeperBoard->boardVector[height][width].isRevealed && minesweeperBoard->boardVector[height][width].hasMine && minesweeperBoard->boardVector[height][width].hasFlag){
         numText=11;
     }
 
         // ODKRYTE, BEZ MINY, BEZ FLAGI - MOZLIWE
-    else if (MinesweeperBoard().boardVector[height][width].isRevealed && !MinesweeperBoard().boardVector[height][width].hasMine && !MinesweeperBoard().boardVector[height][width].hasFlag){
-        numText=MinesweeperBoard().minesAroundField(height, width);
+    else if (minesweeperBoard->boardVector[height][width].isRevealed && !minesweeperBoard->boardVector[height][width].hasMine && !minesweeperBoard->boardVector[height][width].hasFlag){
+        numText=minesweeperBoard->minesAroundField(height, width);
     }
         // ODKRYTE, BEZ MINY, FLAGA - NIE MOZLIWE
-    else if (MinesweeperBoard().boardVector[height][width].isRevealed && !MinesweeperBoard().boardVector[height][width].hasMine && MinesweeperBoard().boardVector[height][width].hasFlag){
+    else if (minesweeperBoard->boardVector[height][width].isRevealed && !minesweeperBoard->boardVector[height][width].hasMine && minesweeperBoard->boardVector[height][width].hasFlag){
         numText=15;
     }
         // ODKRYTE, MINA, BEZ FLAGI - MOZLIWE
-    else if (MinesweeperBoard().boardVector[height][width].isRevealed && MinesweeperBoard().boardVector[height][width].hasMine && !MinesweeperBoard().boardVector[height][width].hasFlag){
+    else if (minesweeperBoard->boardVector[height][width].isRevealed && minesweeperBoard->boardVector[height][width].hasMine && !minesweeperBoard->boardVector[height][width].hasFlag){
         numText=15;
     }
         // ODKRYTE, MINA, FLAGA - NIE MOZLIWE
-    else if (MinesweeperBoard().boardVector[height][width].isRevealed && MinesweeperBoard().boardVector[height][width].hasMine && MinesweeperBoard().boardVector[height][width].hasFlag){
+    else if (minesweeperBoard->boardVector[height][width].isRevealed && minesweeperBoard->boardVector[height][width].hasMine && minesweeperBoard->boardVector[height][width].hasFlag){
         numText=textures.size()+1;
     }else
     {
