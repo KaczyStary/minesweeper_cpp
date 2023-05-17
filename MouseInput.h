@@ -10,8 +10,6 @@ private:
     bool rightClick;
     bool leftClick;
 
-    sf::Vector2i mousePos = sf::Mouse::getPosition(*this->window);
-
 public:
     MouseInput();
 
@@ -21,8 +19,7 @@ public:
     void setRightClick(bool rightClick);
     void setLeftClick(bool leftClick);
 
-    const sf::Vector2i &getMousePos() const;
-
+    sf::Vector2i mousePos;
 };
 
 

@@ -3,7 +3,7 @@ project(minesweeper_ff)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(minesweeper_ff main.cpp Game.cpp Game.h minesweeperBoard.cpp minesweeperBoard.h MouseInput.cpp MouseInput.h)
+add_executable(minesweeper_ff main.cpp Game.cpp Game.h MinesweeperBoard.cpp MinesweeperBoard.h MouseInput.cpp MouseInput.h Button.cpp Button.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)

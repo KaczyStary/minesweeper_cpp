@@ -1,12 +1,23 @@
 #ifndef MINESWEEPER_FF_GAME_H
 #define MINESWEEPER_FF_GAME_H
 
-#include "minesweeperBoard.h"
+#include "MinesweeperBoard.h"
+#include "MouseInput.h"
+#include "Button.h"
+
+enum GameState{
+    GAMEMENU,
+    GAMESTART,
+    GAMECONTINUE,
+    GAMEWIN,
+    GAMELOST
+};
 
 class Game {
 private:
     sf::RenderWindow *window;
     sf::VideoMode windowBounds;
+    std::string windowName;
 
     sf::Event sfEvent;
 
@@ -17,32 +28,64 @@ private:
     int windowHeight;
     int windowWidth;
 
-    std::string windowName;
+    MinesweeperBoard minesweeperBoard;
+    MouseInput mouseInput;
 
-    bool rightClick;
-    bool leftClick;
+    GameState gameState;
+
+    int tileSize=48; // 48 pix
 
 public:
 
     Game();
-    void inGameRender();
     void gameLoop();
 
+    // RENDER //
 
-    int setTextures(minesweeperBoard *minesweeperBoard, int height, int width);
+    void render();
+    void inGameRender();
+    void menuGameRender();
+    void winGameRender();
+    void loseGameRender();
+
 
     // WINDOW //
     void windowClose();
     void windowSwitchWindowToGame();
+    void windowSwitchWindowToMenu();
+
 
     // INIT //
     void initWindow();
     void initVariables();
     void initTextures();
+    int setTextures(int height, int width);
 
-    void initGame();
+    // MOUSE //
+    void mouseLeftRightPressed();
+    void mouseLeftRightReleased();
+    void trackMouse();
 
-    void render();
+    // STATES //
+    void initState();
+    void changeStateToStart();
+    void changeStateToMenu();
+    void changeStateToContinue();
+    void changeStateToWin();
+    void changeStateToLose();
+
+    // UPDATE //
+    void update();
+    void mouseUpdate();
+    void updateGameStatus();
+
+    // WIN/LOSE FUNCTIONS/INSTRUCTIONS //
+    bool isLost();
+    void clearBoard();
+
+    void lose();
+    void win();
+
 };
 
 

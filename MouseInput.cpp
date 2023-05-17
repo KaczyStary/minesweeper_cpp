@@ -20,7 +20,3 @@ bool MouseInput::isLeftClick() const {
 void MouseInput::setLeftClick(bool leftClick) {
     MouseInput::leftClick = leftClick;
 }
-
-const sf::Vector2i &MouseInput::getMousePos() const {
-    return mousePos;
-}
